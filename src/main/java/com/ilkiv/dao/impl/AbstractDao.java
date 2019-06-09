@@ -54,10 +54,8 @@ public abstract class AbstractDao<T, ID> implements GenericDao<T, ID> {
             field.setAccessible(true);
             long id = Long.parseLong(field.get(t).toString());
             statement.executeUpdate("UPDATE " + getTableName() + " SET " + getUpdateFields(t) + " WHERE ID = " + id);
-        } catch (SQLException e) {
+        } catch (SQLException | IllegalAccessException | NoSuchFieldException e) {
             logger.error("Can`t update item");
-        } catch (IllegalAccessException | NoSuchFieldException e) {
-            e.printStackTrace();
         }
         return t;
     }
@@ -80,7 +78,7 @@ public abstract class AbstractDao<T, ID> implements GenericDao<T, ID> {
                 items.add((T) getObjectFromResultSet(rs));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Can`t get all items");
         }
         return items;
     }
