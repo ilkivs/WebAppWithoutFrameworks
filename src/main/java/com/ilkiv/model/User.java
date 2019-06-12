@@ -1,7 +1,12 @@
 package com.ilkiv.model;
 
+import com.ilkiv.annotations.Entity;
+import com.ilkiv.annotations.Table;
+
 import java.util.Objects;
 
+@Entity
+@Table(name = "USER")
 public class User {
 
     private long id;
